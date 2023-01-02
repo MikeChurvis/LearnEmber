@@ -1,7 +1,7 @@
 <div class='product-details'>
   {{!== Header ==}}
   <section>
-    <h3>Beats Solo Wireless Headphones</h3>
+    <h3>{{@name}}</h3>
     <div class='text-warning'>
       <i class='fa fa-star'></i>
       <i class='fa fa-star'></i>
@@ -12,25 +12,26 @@
   </section>
 
   {{!== Price ==}}
-  <section>
-    <del class='small text-black-50'>$199.95</del>
-    <i class='text-danger font-weight-bold'>$99.98</i>
+  <section class={{unless @isDetails 'h4'}}>
+    <del class='small text-black-50'>{{currency @price.original}}</del>
+    <i class='text-danger font-weight-bold'>{{currency @price.current}}</i>
   </section>
 
   {{!== Color ==}}
-  <div>
-    <h5>Color</h5>
-    <div class='product-colors active-{{@color}}'>
-      <button
-        type='button'
-        class='product-color color-red'
-        {{on 'click' (fn @onChangeColor 'red')}}
-      ></button>
-      <button
-        type='button'
-        class='product-color color-black'
-        {{on 'click' (fn @onChangeColor 'black')}}
-      ></button>
+
+  {{#if @isDetails}}
+    <div>
+      <h5>Color</h5>
+      <div class='product-colors active-{{@color}}'>
+
+        {{#each @colors as |colorInfo|}}
+          <button
+            type='button'
+            class='product-color {{concat "color-" colorInfo.color}}'
+            {{on 'click' (fn @onChangeColor colorInfo.color)}}
+          ></button>
+        {{/each}}
+      </div>
     </div>
-  </div>
+  {{/if}}
 </div>
